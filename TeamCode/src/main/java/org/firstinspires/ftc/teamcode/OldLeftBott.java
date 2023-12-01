@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="AutoBottomLeft", group="Robot")
+@Autonomous(name="OldLeftBott", group="Robot")
 //@Disabled
 public class OldLeftBott extends LinearOpMode {
     private DcMotor frontLeftMotor = null;
