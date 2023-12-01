@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 //bruh
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
 @TeleOp
-public class urDad extends LinearOpMode {
+public class newc extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -137,12 +138,12 @@ public class urDad extends LinearOpMode {
             double twoangnorm = twoang % 360;
 
 
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 twostage.setTargetPosition(2200);
                 twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 twostage.setPower(.5);
             }
-            if (gamepad1.dpad_down) {
+            if (gamepad2.dpad_down) {
                 twostage.setTargetPosition(0);
                 twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 twostage.setPower(.5);

@@ -7,18 +7,16 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="org.firstinspires.ftc.teamcode.AutoTopRight", group="Robot")
+@Autonomous(name="AutoBottomLeft", group="Robot")
 //@Disabled
-public class AutoTopRight extends LinearOpMode {
+public class OldLeftBott extends LinearOpMode {
     private DcMotor frontLeftMotor = null;
     private DcMotor backLeftMotor = null;
     private DcMotor frontRightMotor = null;
     private DcMotor backRightMotor = null;
-    private DcMotor twostage=null;
     private ElapsedTime runtime=new ElapsedTime();
     private Servo claw = null;
     private Servo clarm = null;
-    private Servo out=null;
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // No External Gearing.
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
@@ -30,79 +28,35 @@ public class AutoTopRight extends LinearOpMode {
         backLeftMotor = hardwareMap.dcMotor.get("leftback");
         frontRightMotor = hardwareMap.dcMotor.get("rightfront");
         backRightMotor = hardwareMap.dcMotor.get("rightback");
-        twostage = hardwareMap.dcMotor.get("twostage");
 
         claw=hardwareMap.get(Servo.class, "claw");
         clarm=hardwareMap.get(Servo.class, "clarm");
-        out = hardwareMap.get(Servo.class, "out");
-
-        twostage.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        twostage.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        twostage.setTargetPosition(0);
-        twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        out.setPosition(.7);
+        claw.setPosition(0);
         clarm.setPosition(1);
-        claw.setPosition(0.5);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        twostage.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
 
         //1 tile is 9
-        encoderDrive(0.6, -9.5, -9.5, 69.420);
-        encoderDrive(0.5, 8.75, -8.75, 69.420);
-        encoderDrive(0.6, -15, -15, 69.420);
-
-        clarm.setPosition(0.5);
-        sleep(750);
-        twostage.setTargetPosition(650);
-        twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        twostage.setPower(.5);
-        sleep(1000);
-
-        out.setPosition(.1);
-        sleep(1000);
-        out.setPosition(.7);
-        sleep(1000);
-
-        twostage.setTargetPosition(0);
-        twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        twostage.setPower(.5);
-        sleep(1000);
-
-        clarm.setPosition(1);
-        sleep(750);
-        claw.setPosition(0.95);
-        sleep(750);
-        clarm.setPosition(0.5);
-        sleep(750);
-
-        twostage.setTargetPosition(650);
-        twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        twostage.setPower(.5);
-        sleep(1000);
-
-        out.setPosition(.1);
-        sleep(1000);
-        out.setPosition(0.7);
-        sleep(1000);
-
-        twostage.setTargetPosition(0);
-        twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        twostage.setPower(.5);
-        sleep(1000);
+        encoderDrive(0.6, 18.5, 18.5, 69.420);
+        encoderDrive(0.5, -8.75, 8.75, 69.420);
+        encoderDrive(0.6, 35.5, 35.5, 69.420);
+        //This is the only way I could make it work, and I have no idea why. If you can, make this better.
+        //for (double i=0.8; i>=0.7; i-=0.1) {
+        clarm.setPosition(0.52);
+        sleep(500);
+        //}
+        for (double i=0.9; i<=1; i+=0.1) {
+            claw.setPosition(i);
+            sleep(250);
+        }
     }
 
     public void encoderDrive(double speed,
