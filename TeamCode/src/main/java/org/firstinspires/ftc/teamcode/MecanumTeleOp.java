@@ -60,6 +60,7 @@ public class MecanumTeleOp extends LinearOpMode {
 
         twostage.setTargetPosition(0);
         twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        twostage.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //fourstage.setTargetPosition(0);
         //fourstage.setMode(DcMotor.RunMode.RUN_TO_POSITION);

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="org.firstinspires.ftc.teamcode.AutoTopLeft", group="Robot")
+@Autonomous(name="AutoTopLeft", group="Robot")
 //@Disabled
 public class AutoTopLeft extends LinearOpMode {
     private DcMotor frontLeftMotor = null;

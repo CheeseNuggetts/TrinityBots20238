@@ -1,15 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 //bruh
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
 @TeleOp
-public class newc extends LinearOpMode {
+public class cadneclaw extends LinearOpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -61,13 +60,12 @@ public class newc extends LinearOpMode {
         twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         twostage.setDirection(DcMotorSimple.Direction.REVERSE);
 
-
         //fourstage.setTargetPosition(0);
         //fourstage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         out.setPosition(.7);
-        clarm.setPosition(1);
-        claw.setPosition(0.95);
+        clarm.setPosition(.5);
+        claw.setPosition(0);
         plane.setPosition(0);
 
         //Speed
@@ -102,25 +100,25 @@ public class newc extends LinearOpMode {
             }
 
             if (gamepad2.left_stick_button) {
-                claw.setPosition(0.95);
+                claw.setPosition(0);
             }
             if (gamepad2.right_stick_button) {
-                claw.setPosition(0.5);
+                claw.setPosition(1);
             }
 
             if (gamepad2.y) {
-                clarm.setPosition(1);
+                clarm.setPosition(.56);
             }
             if (gamepad2.x) {
-                clarm.setPosition(0.52);
+                clarm.setPosition(0.25);
             }
             if (gamepad2.a) {
-                clarm.setPosition(0.462);
+                clarm.setPosition(0);
             }
-            if (gamepad1.dpad_left) {
+            if (gamepad2.dpad_left) {
                 plane.setPosition(0);
             }
-            if (gamepad1.dpad_right) {
+            if (gamepad2.dpad_right) {
                 plane.setPosition(1);
             }
 
