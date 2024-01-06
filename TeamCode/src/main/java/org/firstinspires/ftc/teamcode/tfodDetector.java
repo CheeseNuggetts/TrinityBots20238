@@ -66,17 +66,16 @@ public class tfodDetector extends LinearOpMode {
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
-    private static final String TFOD_MODEL_ASSET = "mod.tflite";
+    private static final String TFOD_MODEL_ASSET = "mods1.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mod.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods1.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
 
     private static final String LABEL_FIRST_ELEMENT = "Rock";
 
     private static final String[] LABELS = {
-            "Pixels",
-            "Rocks",
+            "Rock",
     };
 
     /**
@@ -193,12 +192,13 @@ public class tfodDetector extends LinearOpMode {
         camera = hardwareMap.get(Servo.class, "camera");
 
         Boolean isDetected = false;
+        int position = -1;
 
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
 
-        if (isDetected == false) {
-            camera.setPosition(0);
+        /*if (isDetected == false) {
+            camera.setPosition(.35);
             telemetry.addData("not detected?", isDetected);
             telemetry.update();
             sleep(7500);
@@ -210,7 +210,7 @@ public class tfodDetector extends LinearOpMode {
             } else {
                 telemetry.addData("in position 1?", isDetected);
                 telemetry.update();
-                camera.setPosition(.5);
+                camera.setPosition(.45);
                 sleep(7500);
                 if (currentRecognitions.size() == 1) {
                     isDetected = true;
@@ -220,7 +220,7 @@ public class tfodDetector extends LinearOpMode {
                 } else {
                     telemetry.addData("in position 2?", isDetected);
                     telemetry.update();
-                    camera.setPosition(1);
+                    camera.setPosition(.62);
                     sleep(7500);
                     if (currentRecognitions.size() == 1) {
                         isDetected = true;
@@ -234,7 +234,41 @@ public class tfodDetector extends LinearOpMode {
 
                     }
                 }
+            }*/
+
+            // auto starts here
+
+            camera.setPosition(.35);
+            sleep(7500);
+            if (currentRecognitions.size() == 1) {
+                position = 0;
+                isDetected = true;
+                telemetry.addData("Position 0", isDetected);
+            } else{
+                telemetry.addData("not here", isDetected);
             }
+            telemetry.update();
+            camera.setPosition(.5);
+            sleep(7500);
+            if (currentRecognitions.size() == 1) {
+                position = 1;
+                isDetected = true;
+                telemetry.addData("Position 1", isDetected);
+            } else{
+                telemetry.addData("not here", isDetected);
+            }
+            telemetry.update();
+            camera.setPosition(.62);
+            sleep(7500);
+            if (currentRecognitions.size() == 1) {
+                position = 2;
+                isDetected = true;
+                telemetry.addData("Position 2", isDetected);
+            } else{
+                telemetry.addData("something went wrong :(", isDetected);
+            }
+            telemetry.update();
+
 
             camera.setPosition(.5);
             telemetry.addData("done", isDetected);
@@ -254,4 +288,3 @@ public class tfodDetector extends LinearOpMode {
         }   // end method telemetryTfod()
 
     }   // end class
-}
