@@ -68,6 +68,15 @@ import java.util.concurrent.TimeoutException;
 public class tfodDetector extends LinearOpMode {
 
     private Servo camera = null;
+    private DcMotor frontLeftMotor = null;
+    private DcMotor backLeftMotor = null;
+    private DcMotor frontRightMotor = null;
+    private DcMotor backRightMotor = null;
+    private DcMotor twostage=null;
+    private ElapsedTime runtime=new ElapsedTime();
+    private Servo claw = null;
+    private Servo clarm = null;
+    private Servo out=null;
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -99,6 +108,8 @@ public class tfodDetector extends LinearOpMode {
     public void runOpMode() {
 
         initTfod();
+
+
 
 
         // Wait for the DS start button to be touched.
@@ -208,8 +219,6 @@ public class tfodDetector extends LinearOpMode {
             Boolean isDetected = false;
 
 
-            long start = System.currentTimeMillis();
-
             telemetry.addData("runtime", getRuntime());
             if (getRuntime() <= 5 && currentRecognitions.size() == 0)  {
                 camera.setPosition(.4);
@@ -230,6 +239,7 @@ public class tfodDetector extends LinearOpMode {
                     telemetry.addData("Position 1", isDetected);
                     telemetry.update();
 
+
                 }
                 telemetry.update();
             }
@@ -240,6 +250,9 @@ public class tfodDetector extends LinearOpMode {
                     isDetected = true;
                     telemetry.addData("Position 2", isDetected);
                     telemetry.update();
+
+
+
                 }
                 telemetry.update();
             }

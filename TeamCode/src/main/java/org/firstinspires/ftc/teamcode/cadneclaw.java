@@ -100,7 +100,7 @@ public class cadneclaw extends LinearOpMode {
             }
 
             if (gamepad2.left_stick_button) {
-                claw.setPosition(0);
+                claw.setPosition(0.2);
             }
             if (gamepad2.right_stick_button) {
                 claw.setPosition(1);
