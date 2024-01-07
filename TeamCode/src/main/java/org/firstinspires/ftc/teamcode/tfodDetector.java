@@ -47,7 +47,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.controls.ExposureControl;
 
 
+import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeoutException;
 
 /*
  * This OpMode illustrates the basics of TensorFlow Object Detection,
@@ -191,88 +198,55 @@ public class tfodDetector extends LinearOpMode {
 
         camera = hardwareMap.get(Servo.class, "camera");
 
-        Boolean isDetected = false;
         int position = -1;
 
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
 
-        /*if (isDetected == false) {
-            camera.setPosition(.35);
-            telemetry.addData("not detected?", isDetected);
-            telemetry.update();
-            sleep(7500);
-            if (currentRecognitions.size() == 1) {
-                isDetected = true;
-                telemetry.addData("isDetected = ", isDetected);
-                telemetry.addData("0", "");
-                telemetry.update();
-            } else {
-                telemetry.addData("in position 1?", isDetected);
-                telemetry.update();
-                camera.setPosition(.45);
-                sleep(7500);
-                if (currentRecognitions.size() == 1) {
-                    isDetected = true;
-                    telemetry.addData("isDetected = ", isDetected);
-                    telemetry.addData("1", "");
-                    telemetry.update();
-                } else {
-                    telemetry.addData("in position 2?", isDetected);
-                    telemetry.update();
-                    camera.setPosition(.62);
-                    sleep(7500);
-                    if (currentRecognitions.size() == 1) {
-                        isDetected = true;
-                        telemetry.addData("isDetected = ", isDetected);
-                        telemetry.addData("2", "");
-                        telemetry.update();
-                    } else {
-                        telemetry.addData("in position 3?", isDetected);
-                        telemetry.addData("something went wrong :(", "");
-                        telemetry.update();
-
-                    }
-                }
-            }*/
-
             // auto starts here
 
-            camera.setPosition(.35);
-            sleep(7500);
-            if (currentRecognitions.size() == 1) {
-                position = 0;
-                isDetected = true;
-                telemetry.addData("Position 0", isDetected);
-            } else{
-                telemetry.addData("not here", isDetected);
-            }
-            telemetry.update();
-            camera.setPosition(.5);
-            sleep(7500);
-            if (currentRecognitions.size() == 1) {
-                position = 1;
-                isDetected = true;
-                telemetry.addData("Position 1", isDetected);
-            } else{
-                telemetry.addData("not here", isDetected);
-            }
-            telemetry.update();
-            camera.setPosition(.62);
-            sleep(7500);
-            if (currentRecognitions.size() == 1) {
-                position = 2;
-                isDetected = true;
-                telemetry.addData("Position 2", isDetected);
-            } else{
-                telemetry.addData("something went wrong :(", isDetected);
-            }
-            telemetry.update();
+            Boolean isDetected = false;
 
 
-            camera.setPosition(.5);
-            telemetry.addData("done", isDetected);
-            telemetry.update();
+            long start = System.currentTimeMillis();
+
+            telemetry.addData("runtime", getRuntime());
+            if (getRuntime() <= 5 && currentRecognitions.size() == 0)  {
+                camera.setPosition(.4);
+                if (currentRecognitions.size() == 1) {
+                    position = 0;
+                    isDetected = true;
+                    telemetry.addData("Position 0", isDetected);
+                    telemetry.update();
+
+                }
+                telemetry.update();
+            }
+            if (getRuntime() >= 5 && getRuntime() <= 10 && currentRecognitions.size() == 0)  {
+                camera.setPosition(.5);
+                if (currentRecognitions.size() == 1) {
+                    position = 1;
+                    isDetected = true;
+                    telemetry.addData("Position 1", isDetected);
+                    telemetry.update();
+
+                }
+                telemetry.update();
+            }
+            if (getRuntime() <= 15 && getRuntime() >= 10 && currentRecognitions.size() == 0)  {
+                camera.setPosition(.62);
+                if (currentRecognitions.size() == 1) {
+                    position = 2;
+                    isDetected = true;
+                    telemetry.addData("Position 2", isDetected);
+                    telemetry.update();
+                }
+                telemetry.update();
+            }
+            if (getRuntime() >= 15 && currentRecognitions.size() == 0) {
+                telemetry.addData("something not goog", "");
+                telemetry.update();
+            }
 
             // Step through the list of recognitions and display info for each one.
             for (Recognition recognition : currentRecognitions) {
