@@ -51,7 +51,7 @@ public class AutoTopLeft extends LinearOpMode {
 
         out.setPosition(.7);
         clarm.setPosition(1);
-        claw.setPosition(0.5);
+        claw.setPosition(0);
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -59,13 +59,14 @@ public class AutoTopLeft extends LinearOpMode {
         backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         twostage.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         waitForStart();
-
+        //0 is bottom for clarm 0.6 is top
+        //0 is close for claw 7 is open.
         //1 tile is 9
         encoderDrive(0.6, -9.5, -9.5, 69.420);
         encoderDrive(0.5, -8.75, 8.75, 69.420);
         encoderDrive(0.6, -15, -15, 69.420);
 
-        clarm.setPosition(0.5);
+        clarm.setPosition(0);
         sleep(750);
         twostage.setTargetPosition(650);
         twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -82,11 +83,11 @@ public class AutoTopLeft extends LinearOpMode {
         twostage.setPower(.5);
         sleep(1000);
 
-        clarm.setPosition(1);
+        clarm.setPosition(0.6);
         sleep(750);
-        claw.setPosition(0.95);
+        claw.setPosition(0.7);
         sleep(750);
-        clarm.setPosition(0.5);
+        clarm.setPosition(0);
         sleep(750);
 
         twostage.setTargetPosition(650);
