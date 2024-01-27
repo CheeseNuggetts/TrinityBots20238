@@ -45,7 +45,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 import java.util.List;
-import java.util.Scanner;
 
 /*
  * This OpMode illustrates the basics of TensorFlow Object Detection,
@@ -82,7 +81,7 @@ public class tblueDetector extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "mods2.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods2.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods1.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
 
     private static final String LABEL_FIRST_ELEMENT = "Rock";
@@ -242,8 +241,8 @@ public class tblueDetector extends LinearOpMode {
      */
 
     public void encoderDrive(double speed,
-                             double leftInches, double rightInches,
-                             double timeoutS) {
+                              double leftInches, double rightInches,
+                              double timeoutS) {
         int newFrontLeftTarget;
         int newFrontRightTarget;
         int newBackLeftTarget;
@@ -322,174 +321,179 @@ public class tblueDetector extends LinearOpMode {
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         telemetry.addData("# Objects Detected", currentRecognitions.size());
 
-        // auto starts here
+            // auto starts here
 
 
 
-        long start = System.currentTimeMillis();
+            long start = System.currentTimeMillis();
 
-        telemetry.addData("runtime", getRuntime());
-        if (getRuntime() <= 5 && currentRecognitions.size() == 0)  {
-            camera.setPosition(.4);
-            telemetry.update();
-        }
-        if (getRuntime() >= 5 && getRuntime() <= 10 && currentRecognitions.size() == 0)  {
-            camera.setPosition(.5);
-            telemetry.update();
-        }
-        if (getRuntime() <= 15 && getRuntime() >= 10 && currentRecognitions.size() == 0)  {
-            camera.setPosition(.62);
-
-            telemetry.update();
-        }
-        if (getRuntime() >= 15 && currentRecognitions.size() == 0) {
-            telemetry.addData("something not goog", "");
-            telemetry.update();
-        }
-
-
-        // Step through the list of recognitions and display info for each one.
-        for (Recognition recognition : currentRecognitions) {
-            double x = (recognition.getLeft() + recognition.getRight()) / 2;
-            double y = (recognition.getTop() + recognition.getBottom()) / 2;
-            long position = Math.round(camera.getPosition() * 100);
-            if (Math.round(position) == 40) {
-
-                telemetry.addData("pos 2", "");
-                encoderDrive(0.6, -2, -2, 69);
-                encoderDrive(0.6, 17.75, -17.75, 69);
-                clarm.setPosition(0.15);
-                sleep(100);
-                encoderDrive(0.5, 2, 2, 69);
-                encoderDrive(0.5, -3, 3, 69);
-                encoderDrive(0.5, 2, 2, 69);
-                sleep(200);
-                claw.setPosition(1);
-
-                sleep(500);
-                claw.setPosition(0);
-                clarm.setPosition(200);
-                sleep(100);
-
-                encoderDrive(0.5, -2, -2, 69);
-                encoderDrive(0.5, 3, -3, 69);
-                encoderDrive(0.5, 5.5, 5.5, 69);
-                encoderDrive(0.5, -8.875, 8.875, 69.420);
-                encoderDrive(0.6, -34, -34, 69.420);
-
-                clarm.setPosition(0);
-                sleep(750);
-                twostage.setTargetPosition(650);
-                twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                twostage.setPower(.5);
-                sleep(1000);
-
-                out.setPosition(.1);
-                sleep(1000);
-                out.setPosition(.7);
-                sleep(1000);
-
-                twostage.setTargetPosition(0);
-                twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                twostage.setPower(.5);
-                sleep(1000);
-                break;
-
+            telemetry.addData("runtime", getRuntime());
+            if (getRuntime() <= 5 && currentRecognitions.size() == 0)  {
+                camera.setPosition(.4);
+                telemetry.update();
             }
-            if (Math.round(position) == 50) {
-                telemetry.addData("pos 1", "");
-                encoderDrive(0.6, -2, -2, 69);
-                encoderDrive(0.6, 17.75, -17.75, 69);
-                clarm.setPosition(0.15);
-                sleep(100);
-                encoderDrive(0.5, 6, 6, 69);
-                sleep(200);
-                claw.setPosition(1);
-
-                sleep(500);
-                claw.setPosition(0);
-                clarm.setPosition(1);
-
-                encoderDrive(0.6, 2, 2, 69.420);
-                encoderDrive(0.5, -8.875, 8.875, 69.420);
-                encoderDrive(0.6, -34, -34, 69.420);
-
-                clarm.setPosition(0);
-                sleep(750);
-                twostage.setTargetPosition(650);
-                twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                twostage.setPower(.5);
-                sleep(1000);
-
-                out.setPosition(.1);
-                sleep(1000);
-                out.setPosition(.7);
-                sleep(1000);
-
-                twostage.setTargetPosition(0);
-                twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                twostage.setPower(.5);
-                sleep(1000);
-                break;
-
+            if (getRuntime() >= 5 && getRuntime() <= 10 && currentRecognitions.size() == 0)  {
+                camera.setPosition(.5);
+                telemetry.update();
             }
-            if (Math.round(position) == 62) {
-                telemetry.addData("pos 0", "");
-                encoderDrive(0.6, -2, -2, 69);
-                encoderDrive(0.6, -17.75, 17.75, 69);
-                clarm.setPosition(0.15);
-                sleep(100);
-                encoderDrive(0.5, 4, 4, 69);
-                encoderDrive(0.5, 5, -5, 69);
-                encoderDrive(0.5, 2, 2, 69);
-                sleep(200);
-                claw.setPosition(1);
-                sleep(500);
-                claw.setPosition(0);
-                clarm.setPosition(200);
-                sleep(100);
-                encoderDrive(0.5, -2, -2, 69);
-                encoderDrive(0.5, -5, 5, 69);
-                encoderDrive(0.6, 12, 12, 69.420);
-                encoderDrive(0.5, -8.875, 8.875, 69.420);
-                encoderDrive(0.6, -25, -25, 69.420);
-                encoderDrive(0.5, 8.875, -8.875, 69.420);
-                encoderDrive(0.6, -10, -10, 69.420);
-                encoderDrive(0.5, -8.875, 8.875, 69.420);
-                encoderDrive(0.6, -9, -9, 69.420);
+            if (getRuntime() <= 15 && getRuntime() >= 10 && currentRecognitions.size() == 0)  {
+                camera.setPosition(.62);
 
-                clarm.setPosition(0);
-                sleep(750);
-                twostage.setTargetPosition(650);
-                twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                twostage.setPower(.5);
-                sleep(1000);
-
-                out.setPosition(.1);
-                sleep(1000);
-                out.setPosition(.7);
-                sleep(1000);
-
-                twostage.setTargetPosition(0);
-                twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                twostage.setPower(.5);
-                sleep(1000);
-                break;
-
-
+                telemetry.update();
             }
-            telemetry.addData("", position);
-            telemetry.addData("", " ");
-            telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
-            telemetry.addData("- Position", "%.0f / %.0f", x, y);
-            telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
+            if (getRuntime() >= 15 && currentRecognitions.size() == 0) {
+                telemetry.addData("something not goog", "");
+                telemetry.update();
+            }
 
-            break;
-        }   // end for() loop
+
+            // Step through the list of recognitions and display info for each one.
+            for (Recognition recognition : currentRecognitions) {
+                double x = (recognition.getLeft() + recognition.getRight()) / 2;
+                double y = (recognition.getTop() + recognition.getBottom()) / 2;
+                long position = Math.round(camera.getPosition() * 100);
+                if (Math.round(position) == 40) {
+
+                    //net 18.75
+
+                    telemetry.addData("pos 0", "");
+                    encoderDrive(0.6, -2, -2, 69); //2
+                    encoderDrive(0.6, -17.75, 17.75, 69);
+                    clarm.setPosition(0.15);
+                    sleep(100);
+                    encoderDrive(0.5, 4, 4, 69); //4
+
+                    encoderDrive(0.5, -5, 5, 69);
+                    encoderDrive(0.5, 2, 2, 69);
+                    sleep(200);
+                    claw.setPosition(1);
+                    sleep(500);
+                    claw.setPosition(0);
+                    clarm.setPosition(200);
+                    sleep(100);
+                    encoderDrive(0.5, -2, -2, 69);
+                    encoderDrive(0.5, 5, -5, 69);
+
+                    encoderDrive(0.6, 12.75, 12.75, 69.420); //12.75
+
+                    encoderDrive(0.5, 8.875, -8.875, 69.420);
+                    encoderDrive(0.6, -25, -25, 69.420);
+                    encoderDrive(0.5, -8.875, 8.875, 69.420);
+                    encoderDrive(0.6, -10, -10, 69.420);
+                    encoderDrive(0.5, 8.875, -8.875, 69.420);
+                    encoderDrive(0.6, -9, -9, 69.420);
+
+                    clarm.setPosition(0);
+                    sleep(750);
+                    twostage.setTargetPosition(650);
+                    twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    twostage.setPower(.5);
+                    sleep(1000);
+
+                    out.setPosition(.1);
+                    sleep(1000);
+                    out.setPosition(.7);
+                    sleep(1000);
+
+                    twostage.setTargetPosition(0);
+                    twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    twostage.setPower(.5);
+                    sleep(1000);
+
+                }
+                if (Math.round(position) == 50) {
+                    telemetry.addData("pos 1", "");
+                    encoderDrive(0.6, -2, -2, 69); //2
+                    encoderDrive(0.6, 17.75, -17.75, 69);
+                    clarm.setPosition(0.15);
+                    sleep(100);
+                    encoderDrive(0.5, 6, 6, 69); //6
+                    sleep(200);
+                    claw.setPosition(1);
+
+                    sleep(500);
+                    claw.setPosition(0);
+                    clarm.setPosition(1);
+
+                    encoderDrive(0.6, 1.75, 1.75, 69.420); //1.75
+                    encoderDrive(0.5, 8.875, -8.875, 69.420);
+                    encoderDrive(0.6, -34, -34, 69.420);
+
+                    clarm.setPosition(0);
+                    sleep(750);
+                    twostage.setTargetPosition(650);
+                    twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    twostage.setPower(.5);
+                    sleep(1000);
+
+                    out.setPosition(.1);
+                    sleep(1000);
+                    out.setPosition(.7);
+                    sleep(1000);
+
+                    twostage.setTargetPosition(0);
+                    twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    twostage.setPower(.5);
+                    sleep(1000);
+
+                }
+                if (Math.round(position) == 62) {
+
+                    //net 9.75
+
+                    telemetry.addData("pos 2", "");
+                    encoderDrive(0.6, -2, -2, 69); //2
+                    encoderDrive(0.6, 17.75, -17.75, 69);
+                    clarm.setPosition(0.15);
+                    sleep(100);
+                    encoderDrive(0.5, 2, 2, 69); //2
+                    encoderDrive(0.5, 3, -3, 69);
+                    encoderDrive(0.5, 2, 2, 69);
+                    sleep(200);
+                    claw.setPosition(1);
+
+                    sleep(500);
+                    claw.setPosition(0);
+                    clarm.setPosition(200);
+                    sleep(100);
+
+                    encoderDrive(0.5, -2, -2, 69);
+                    encoderDrive(0.5, -3, 3, 69);
+                    encoderDrive(0.5, 5.75, 5.75, 69); //5.75
+                    encoderDrive(0.5, 8.875, -8.875, 69.420);
+                    encoderDrive(0.6, -34, -34, 69.420);
+
+                    clarm.setPosition(0);
+                    sleep(750);
+                    twostage.setTargetPosition(650);
+                    twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    twostage.setPower(.5);
+                    sleep(1000);
+
+                    out.setPosition(.1);
+                    sleep(1000);
+                    out.setPosition(.7);
+                    sleep(1000);
+
+                    twostage.setTargetPosition(0);
+                    twostage.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    twostage.setPower(.5);
+                    sleep(1000);
+
+
+                }
+                telemetry.addData("", position);
+                telemetry.addData("", " ");
+                telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
+                telemetry.addData("- Position", "%.0f / %.0f", x, y);
+                telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());
+
+                break;
+            }   // end for() loop
 
     }   // end method telemetryTfod()
 
-}   // end class
+    }   // end class
 
 
 
