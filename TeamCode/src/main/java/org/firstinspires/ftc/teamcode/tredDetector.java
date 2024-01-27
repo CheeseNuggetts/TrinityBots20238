@@ -81,7 +81,7 @@ public class tredDetector extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "mods1.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods2.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods1.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
 
     private static final String LABEL_FIRST_ELEMENT = "Rock";
@@ -227,7 +227,7 @@ public class tredDetector extends LinearOpMode {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        //tfod.setMinResultConfidence(0.75f);
+        tfod.setMinResultConfidence(0.90f);
 
         // Disable or re-enable the TFOD processor at any time.
         //visionPortal.setProcessorEnabled(tfod, true);
@@ -328,20 +328,20 @@ public class tredDetector extends LinearOpMode {
         long start = System.currentTimeMillis();
 
         telemetry.addData("runtime", getRuntime());
-        if (getRuntime() <= 5 && currentRecognitions.size() == 0)  {
+        if (getRuntime() <= 4 && currentRecognitions.size() == 0)  {
             camera.setPosition(.4);
             telemetry.update();
         }
-        if (getRuntime() >= 5 && getRuntime() <= 10 && currentRecognitions.size() == 0)  {
+        if (getRuntime() >= 4 && getRuntime() <= 8 && currentRecognitions.size() == 0)  {
             camera.setPosition(.5);
             telemetry.update();
         }
-        if (getRuntime() <= 15 && getRuntime() >= 10 && currentRecognitions.size() == 0)  {
+        if (getRuntime() <= 12 && getRuntime() >= 8 && currentRecognitions.size() == 0)  {
             camera.setPosition(.62);
 
             telemetry.update();
         }
-        if (getRuntime() >= 15 && currentRecognitions.size() == 0) {
+        if (getRuntime() >= 12 && currentRecognitions.size() == 0) {
             telemetry.addData("something not goog", "");
             telemetry.update();
         }
@@ -445,28 +445,28 @@ public class tredDetector extends LinearOpMode {
                 //needs to travel net 18.75 forwards
 
                 encoderDrive(0.6, -2, -2, 69); //2
-                encoderDrive(0.6, -17.75, 17.75, 69);
+                encoderDrive(0.7, -17.75, 17.75, 69);
                 clarm.setPosition(0.15);
                 sleep(100);
-                encoderDrive(0.5, 4, 4, 69); //4
+                encoderDrive(0.7, 4, 4, 69); //4
                 encoderDrive(0.5, 5, -5, 69);
-                encoderDrive(0.5, 2, 2, 69);
+                //encoderDrive(0.5, 2, 2, 69);
                 sleep(200);
                 claw.setPosition(1);
                 sleep(500);
                 claw.setPosition(0);
                 clarm.setPosition(200);
                 sleep(100);
-                encoderDrive(0.5, -2, -2, 69);
+                //encoderDrive(0.5, -2, -2, 69);
                 encoderDrive(0.5, -5, 5, 69); //turn sequence end
 
-                encoderDrive(0.6, 12.75, 12.75, 69.420);
-                encoderDrive(0.5, 8.875, -8.875, 69.420);
-                encoderDrive(0.6, -25, -25, 69.420);
-                encoderDrive(0.5, -8.875, 8.875, 69.420);
-                encoderDrive(0.6, -10, -10, 69.420);
-                encoderDrive(0.5, 8.875, -8.875, 69.420);
-                encoderDrive(0.6, -9, -9, 69.420);
+                encoderDrive(0.7, 12.75, 12.75, 69.420);
+                encoderDrive(0.8, -8.875, 8.875, 69.420);
+                encoderDrive(0.7, -25, -25, 69.420);
+                encoderDrive(0.8, 8.875, -8.875, 69.420);
+                encoderDrive(0.7, -10, -10, 69.420);
+                encoderDrive(0.8, -8.875, 8.875, 69.420);
+                encoderDrive(0.7, -9, -9, 69.420);
 
                 clarm.setPosition(0);
                 sleep(750);

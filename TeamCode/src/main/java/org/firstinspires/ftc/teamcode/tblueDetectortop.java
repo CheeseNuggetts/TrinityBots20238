@@ -79,7 +79,7 @@ public class tblueDetectortop extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "mods2.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods1.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/mods2.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
 
     private static final String LABEL_FIRST_ELEMENT = "Rock";
@@ -225,7 +225,7 @@ public class tblueDetectortop extends LinearOpMode {
         visionPortal = builder.build();
 
         // Set confidence threshold for TFOD recognitions, at any time.
-        //tfod.setMinResultConfidence(0.75f);
+        tfod.setMinResultConfidence(0.90f);
 
         // Disable or re-enable the TFOD processor at any time.
         //visionPortal.setProcessorEnabled(tfod, true);
@@ -326,20 +326,20 @@ public class tblueDetectortop extends LinearOpMode {
             long start = System.currentTimeMillis();
 
             telemetry.addData("runtime", getRuntime());
-            if (getRuntime() <= 5 && currentRecognitions.size() == 0)  {
+            if (getRuntime() <= 4 && currentRecognitions.size() == 0)  {
                 camera.setPosition(.4);
                 telemetry.update();
             }
-            if (getRuntime() >= 5 && getRuntime() <= 10 && currentRecognitions.size() == 0)  {
+            if (getRuntime() >= 4 && getRuntime() <= 8 && currentRecognitions.size() == 0)  {
                 camera.setPosition(.5);
                 telemetry.update();
             }
-            if (getRuntime() <= 15 && getRuntime() >= 10 && currentRecognitions.size() == 0)  {
+            if (getRuntime() <= 12 && getRuntime() >= 8 && currentRecognitions.size() == 0)  {
                 camera.setPosition(.62);
 
                 telemetry.update();
             }
-            if (getRuntime() >= 15 && currentRecognitions.size() == 0) {
+            if (getRuntime() >= 12 && currentRecognitions.size() == 0) {
                 telemetry.addData("something not goog", "");
                 telemetry.update();
             }
